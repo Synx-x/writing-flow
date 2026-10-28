@@ -1,0 +1,20 @@
+{
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "apply_patch|write_file",
+      "hooks": [
+        {"command": "python3 \"${WRITING_FLOW_ROOT}/adapters/codex/run_hook.py\" guard_style"},
+        {"command": "python3 \"${WRITING_FLOW_ROOT}/adapters/codex/run_hook.py\" guard_flow"}
+      ]
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "apply_patch|write_file",
+      "hooks": [
+        {"command": "python3 \"${WRITING_FLOW_ROOT}/adapters/codex/run_hook.py\" style_check"},
+        {"command": "python3 \"${WRITING_FLOW_ROOT}/adapters/codex/run_hook.py\" guard_doc_residue"}
+      ]
+    }
+  ]
+}

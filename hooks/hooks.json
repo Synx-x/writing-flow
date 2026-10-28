@@ -1,0 +1,39 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_style.py\""},
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_flow.py\""}
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit|MultiEdit",
+        "hooks": [
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/style_check.py\""},
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_doc_residue.py\""}
+        ]
+      }
+    ],
+    "MessageDisplay": [
+      {"hooks": [{"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/message_display_audit.py\""}]}
+    ],
+    "SubagentStop": [
+      {"hooks": [{"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/subagent_style_audit.py\""}]}
+    ],
+    "UserPromptSubmit": [
+      {"hooks": [
+        {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/flow_reinforce.py\""},
+        {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/plain_tracker.py\""},
+        {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/plain_inject.py\""},
+        {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/violation_feedback.py\""}
+      ]}
+    ],
+    "Stop": [
+      {"hooks": [{"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/response_audit.py\""}]}
+    ]
+  }
+}

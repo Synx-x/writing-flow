@@ -1,0 +1,9 @@
+{
+  "name": "writing-flow",
+  "version": "0.1.0",
+  "description": "Writing rules and flow checks for Claude Code.",
+  "author": {
+    "name": "Synx-x"
+  },
+  "license": "MIT"
+}

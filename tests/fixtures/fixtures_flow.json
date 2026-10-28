@@ -1,0 +1,396 @@
+{
+  "_about": "Good/bad passage pairs from William Fitzpatrick (Writer Science) video cayUBPHB1HQ and the writerscience.com Writing Tools library. Verdicts are the source author's own. Used as ground truth for the flow linter. Tier author = verdict from the Writer Science source. Tier panel = passages written by workflow judges, verdicts are theirs, reported separately.",
+  "fixtures": [
+    {
+      "id": "constant_theme_good",
+      "pattern": "constant_theme",
+      "verdict": "good",
+      "source": "Mihaly Csikszentmihalyi, Flow (video 2:19, slide 2:30)",
+      "topics_in_order": [
+        "Happiness",
+        "It",
+        "It",
+        "It",
+        "Happiness, in fact"
+      ],
+      "expected_findings": [],
+      "text": "Happiness is not something that happens. It is not the result of good fortune or random chance. It is not something that money can buy or power command. It does not depend on outside events, but rather on how we interpret them. Happiness, in fact, is a condition that must be prepared for, cultivated, and defended privately by each person.",
+      "tier": "author"
+    },
+    {
+      "id": "constant_theme_bad_rewrite",
+      "pattern": "constant_theme",
+      "verdict": "bad",
+      "source": "Fitzpatrick's unpublished rewrite, nothing removed (video 1:33, slide 1:40)",
+      "topics_in_order": [
+        "Things that happen",
+        "Good fortune and random chance",
+        "Money",
+        "Outside events",
+        "Preparation, cultivation, and private defence"
+      ],
+      "expected_findings": [
+        "topic_drift"
+      ],
+      "text": "Things that happen are not what produces happiness. Good fortune and random chance don't result in it, either. Money can't buy it, and power can't command it. Outside events do not determine it; our interpretation of those events does. Preparation, cultivation, and private defence by each person are what this condition requires.",
+      "tier": "author",
+      "note": "new_in_topic also applies but the linter reports one finding per drifting paragraph."
+    },
+    {
+      "id": "linking_good",
+      "pattern": "linking",
+      "verdict": "good",
+      "source": "James Gleick, Chaos: Making a New Science (video 7:50, slide 7:55)",
+      "topics_in_order": [
+        "Outside his window Lorenz",
+        "Fog and clouds",
+        "The machine, a Royal McBee"
+      ],
+      "expected_findings": [],
+      "text": "Outside his window Lorenz could watch real weather, the early-morning fog creeping along the Massachusetts Institute of Technology campus or the low clouds slipping over the rooftops from the Atlantic. Fog and clouds never arose in the model running on his computer. The machine, a Royal McBee, was a thicket of wiring and vacuum tubes that occupied an ungainly portion of Lorenz's office.",
+      "tier": "author"
+    },
+    {
+      "id": "linking_bad_no_anchor",
+      "pattern": "linking",
+      "verdict": "bad",
+      "source": "Constructed by Fitzpatrick for demonstration; slide label NO ANCHOR (video 10:40, slide 10:50)",
+      "topics_in_order": [
+        "Soon Portland",
+        "The aroma of roasting beans",
+        "The machines",
+        "His typewriter",
+        "That",
+        "I",
+        "This preference"
+      ],
+      "expected_findings": [
+        "unanchored_chain"
+      ],
+      "note": "Every sentence links to the one before it, so per-sentence flow is fine. The paragraph as a whole is about nothing. Flow without coherence. A lexical linter cannot tell this chain from a legitimate linking pattern, so the finding is the advisory kind unanchored_chain.",
+      "text": "Soon Portland will be the coffee roasting hub of the nation. The aroma of roasting beans fills the streets, and gleaming espresso machines line the counters. The machines remind me of my dad's old typewriter, covered with keys I would press randomly. His typewriter always jammed on me. That's why I avoided it. I prefer to write with a blue pen on yellow legal pads. This preference has been the topic of heated debates between me and my creative writing professor.",
+      "tier": "author"
+    },
+    {
+      "id": "derived_parts_good",
+      "pattern": "derived_parts",
+      "verdict": "good",
+      "source": "Steven Pinker, The Language Instinct (video 13:46, slide 13:55)",
+      "topics_in_order": [
+        "When neuroscientists look directly at the brain",
+        "The anatomy of the normal brain",
+        "In some of the regions associated with language, the differences",
+        "Aphasics' brains"
+      ],
+      "index_comment_key_term": "the left hemisphere",
+      "expected_findings": [],
+      "text": "When neuroscientists look directly at the brain, using a variety of techniques, they can actually see language in action in the left hemisphere. The anatomy of the normal brain, its bulges and creases, is slightly asymmetrical. In some of the regions associated with language, the differences are large enough to be seen with the naked eye. Aphasics' brains almost always show lesions in the left hemisphere.",
+      "tier": "author"
+    },
+    {
+      "id": "derived_parts_bad_missing_index",
+      "pattern": "derived_parts",
+      "verdict": "bad",
+      "source": "Constructed by Fitzpatrick for demonstration (video 16:34, slide 16:45)",
+      "topics_in_order": [
+        "After gathering the smallest and most colorful leaves from the maples and oaks in our backyard, we",
+        "In just a day or two, the leaves",
+        "We",
+        "Using clear adhesive paper, we"
+      ],
+      "expected_findings": [
+        "missing_index"
+      ],
+      "text": "After gathering the smallest and most colorful leaves from the maples and oaks in our backyard, we place the leaves between sheets of blotter paper, which we then cover with a large, heavy book. In just a day or two, the leaves are ready to be mounted on cards. We use plain index cards, folded in half. Using clear adhesive paper, we put one leaf on each card, leaving room for the guest's name.",
+      "tier": "author"
+    },
+    {
+      "id": "derived_parts_fixed_with_index",
+      "pattern": "derived_parts",
+      "verdict": "good",
+      "source": "Same passage with the index clause added (video 18:00, slide 18:25)",
+      "expected_findings": [],
+      "text": "Each Thanksgiving we make place cards decorated with pressed autumn leaves. After gathering the smallest and most colorful leaves from the maples and oaks in our backyard, we place the leaves between sheets of blotter paper, which we then cover with a large, heavy book. In just a day or two, the leaves are ready to be mounted on cards. We use plain index cards, folded in half. Using clear adhesive paper, we put one leaf on each card, leaving room for the guest's name.",
+      "tier": "author"
+    },
+    {
+      "id": "theme_preview_good",
+      "pattern": "theme_preview",
+      "verdict": "good",
+      "source": "Jonathan Haidt, The Righteous Mind (video 19:26, slide 19:40)",
+      "preview_terms": [
+        "autonomy",
+        "community",
+        "divinity"
+      ],
+      "topics_in_order": [
+        "In their theory of morality, Shweder et al.",
+        "The ethic of autonomy",
+        "The ethic of community",
+        "The ethic of divinity"
+      ],
+      "expected_findings": [],
+      "text": "In their theory of morality, Shweder et al. found three major clusters of moral themes, which they called the ethics of autonomy, community, and divinity. The ethic of autonomy is based on the idea that people are, first and foremost, autonomous individuals with wants, needs, and preferences. The ethic of community is based on the idea that people are, first and foremost, members of larger entities such as families, teams, armies, companies, tribes, and nations. The ethic of divinity is based on the idea that people are, first and foremost, temporary vessels within which a divine soul has been implanted.",
+      "tier": "author"
+    },
+    {
+      "id": "theme_preview_bad_synonym",
+      "pattern": "theme_preview",
+      "verdict": "bad",
+      "source": "Fitzpatrick's spoken counter-example: swap 'community' for the synonym 'groups' (video 20:47)",
+      "preview_terms": [
+        "autonomy",
+        "community",
+        "divinity"
+      ],
+      "expected_findings": [
+        "preview_term_dropped"
+      ],
+      "text": "In their theory of morality, Shweder et al. found three major clusters of moral themes, which they called the ethics of autonomy, community, and divinity. The ethic of autonomy is based on the idea that people are, first and foremost, autonomous individuals with wants, needs, and preferences. The ethic of groups is based on the idea that people are, first and foremost, members of larger entities such as families, teams, armies, companies, tribes, and nations. The ethic of divinity is based on the idea that people are, first and foremost, temporary vessels within which a divine soul has been implanted.",
+      "tier": "author"
+    },
+    {
+      "id": "coherence_bad_web",
+      "pattern": "coherence",
+      "verdict": "bad",
+      "source": "writerscience.com Coherence tool, member section, 'An Example'",
+      "topics_in_order": [
+        "Clear visual hierarchy",
+        "A sense of usability",
+        "the purpose of each page",
+        "Confusing websites"
+      ],
+      "expected_findings": [
+        "topic_drift"
+      ],
+      "text": "Clear visual hierarchy at the top of web pages helps visitors identify what a site is primarily for. A sense of usability emerges when a series of menu items reflects a limited set of core functions. But the purpose of each page is obscured by apparently arbitrary changes of navigation. Confusing websites result when that happens.",
+      "tier": "author"
+    },
+    {
+      "id": "coherence_good_web",
+      "pattern": "coherence",
+      "verdict": "good",
+      "source": "writerscience.com Coherence tool, member section, revised version",
+      "topics_in_order": [
+        "Visitors",
+        "They",
+        "But when navigation seems to change arbitrarily, visitors",
+        "When that happens, they"
+      ],
+      "expected_findings": [],
+      "text": "Visitors identify what a site is primarily for when they see clear visual hierarchy at the top of web pages, especially in the main headings. They feel a site is usable when they encounter a series of menu items that reflects a limited set of core functions. But when navigation seems to change arbitrarily, visitors lose track of each page's purpose. When that happens, they feel they are using a website that is confusing and even poorly designed.",
+      "tier": "author"
+    },
+    {
+      "id": "emphasis_bad_long_runway",
+      "pattern": "emphasis",
+      "verdict": "bad",
+      "source": "writerscience.com Emphasis tool, member section, Step 1",
+      "expected_findings": [
+        "long_runway"
+      ],
+      "words_before_verb": 22,
+      "text": "Statistical and demographic examination of public school enrollment and funding patterns over the past five decades to identify trends in educational inequality is the focus of the research.",
+      "tier": "author"
+    },
+    {
+      "id": "emphasis_good_short_runway",
+      "pattern": "emphasis",
+      "verdict": "good",
+      "source": "writerscience.com Emphasis tool, member section, Step 1",
+      "expected_findings": [],
+      "text": "In this research, we examine public school enrollment and funding patterns over the past five decades, using statistical and demographic methods to identify trends in educational inequality.",
+      "tier": "author"
+    },
+    {
+      "id": "emphasis_bad_new_term_first",
+      "pattern": "emphasis",
+      "verdict": "bad",
+      "source": "writerscience.com Emphasis tool, member section, Step 2",
+      "expected_findings": [],
+      "text": "Spike timing-dependent plasticity, a form of synaptic modification, has been found to play a key role in neural development.",
+      "tier": "author",
+      "note": "Only 8 words precede the verb. The fault is an unfamiliar technical term in the topic slot, which a length rule cannot see. Kept as a bad passage with no detectable kind."
+    },
+    {
+      "id": "emphasis_good_new_term_last",
+      "pattern": "emphasis",
+      "verdict": "good",
+      "source": "writerscience.com Emphasis tool, member section, Step 2",
+      "expected_findings": [],
+      "text": "A key form of synaptic modification that plays a crucial role in neural development is known as spike timing-dependent plasticity.",
+      "tier": "author"
+    },
+    {
+      "id": "flow_bad_darwin",
+      "pattern": "flow",
+      "verdict": "bad",
+      "source": "writerscience.com Flow tool, Step 2",
+      "expected_findings": [
+        "long_runway"
+      ],
+      "text": "Hundreds of letters, both personal and scientific, to scores of different recipients, including leading scientific figures, illuminate Darwin's genius.",
+      "tier": "author"
+    },
+    {
+      "id": "flow_good_darwin",
+      "pattern": "flow",
+      "verdict": "good",
+      "source": "writerscience.com Flow tool, Step 2 (passive voice chosen on purpose to keep old information first)",
+      "expected_findings": [],
+      "text": "Darwin's genius is illuminated by hundreds of letters, both personal and scientific, to scores of different recipients, including leading scientific figures.",
+      "tier": "author"
+    },
+    {
+      "id": "fractal_bad_paragraph_no_index",
+      "pattern": "fractal_index",
+      "verdict": "bad",
+      "source": "writerscience.com Write in Fractals tool, paragraph example",
+      "expected_findings": [
+        "missing_index"
+      ],
+      "text": "25 high school students solved math problems that were checked to see how well six weeks of training helped them use algebra in everyday situations. That skill is an important part of using math in real life. In problems solved before training began, the students failed almost completely. After training, they solved most of the problems in the first week, but by the fourth month they had returned to their starting level.",
+      "tier": "author"
+    },
+    {
+      "id": "fractal_good_paragraph_with_index",
+      "pattern": "fractal_index",
+      "verdict": "good",
+      "source": "writerscience.com Write in Fractals tool, paragraph example with Index (tail sentence reconstructed to complete the paragraph)",
+      "expected_findings": [],
+      "text": "In this study, 25 high school students were taught to use algebra in everyday situations. They did so successfully during training, but the effect was inconsistent and less than expected, and four months after training ended, the training had no measurable effect. In problems solved before training began, the students failed almost completely. After training, they solved most of the problems in the first week, but by the fourth month they had returned to their starting level.",
+      "tier": "author"
+    },
+    {
+      "id": "truman_bad_original",
+      "pattern": "coherence",
+      "verdict": "bad",
+      "source": "Follow-up video n1CrHXxcfbA, original passage read at 0:58",
+      "topics_in_order": [
+        "Many issues other than science, domestic politics in particular",
+        "A Sino-Soviet bloc",
+        "Support for Truman's foreign policy",
+        "the first Russian atom bomb test",
+        "Truman's conclusion that he could not afford letting the public think that Russia had been allowed to be the first in developing the most powerful weapon yet",
+        "The risk in the Oppenheimer recommendation"
+      ],
+      "expected_findings": [
+        "topic_drift"
+      ],
+      "text": "Many issues other than science, domestic politics in particular, faced Truman when he was considering the Oppenheimer committee's recommendation to stop the hydrogen bomb project. A Sino-Soviet bloc had been proclaimed by Russia and China, so the Cold War was becoming an issue. Support for Truman's foreign policy was shrinking among Republican leaders in Congress. And the first Russian atom bomb test made the public demand a strong response from him. Truman's conclusion that he could not afford letting the public think that Russia had been allowed to be the first in developing the most powerful weapon yet was an inevitable one. The risk in the Oppenheimer recommendation was worth taking, according to some historians, but the political issues that Truman had to face were too powerful to ignore.",
+      "tier": "author",
+      "note": "The first sentence has a 9-word runway. The cap is 10 because Pinker's good passage carries a 10-word subject with an appositive."
+    },
+    {
+      "id": "truman_good_rewrite",
+      "pattern": "coherence",
+      "verdict": "good",
+      "source": "Follow-up video n1CrHXxcfbA, rewrite built on screen 4:00 to 11:30; transcribed from speech, wording reconstructed",
+      "topics_in_order": [
+        "When Truman was considering the Oppenheimer committee's recommendation to stop the hydrogen bomb project, he",
+        "First, Russia and China",
+        "Second, Truman's foreign policy",
+        "Third, since the Russians had been first to test the atom bomb, the public",
+        "Truman",
+        "According to some historians, Truman",
+        "But Truman"
+      ],
+      "expected_findings": [],
+      "text": "When Truman was considering the Oppenheimer committee's recommendation to stop the hydrogen bomb project, he was faced with many issues other than science, domestic politics in particular. First, Russia and China had proclaimed a Sino-Soviet bloc, making the Cold War an issue. Second, Truman's foreign policy was losing support from Republican leaders in Congress. Third, since the Russians had been first to test the atom bomb, the public demanded his strong response. Truman inevitably concluded that he could not afford letting the public think that Russia had been allowed to be first in developing the most powerful weapon yet. According to some historians, Truman should have risked following the Oppenheimer recommendation. But Truman could not ignore these powerful political issues.",
+      "tier": "author"
+    },
+    {
+      "id": "judge1_good_linking_chain",
+      "pattern": "panel",
+      "verdict": "good",
+      "source": "Workflow judge panel, judge 1 (subtle drift lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [],
+      "text": "The camera obscura was a device that fascinated Renaissance artists. Artists used it to trace the outlines of landscapes and figures on paper. The tracings produced accurate proportions that painters could then transfer to canvas. Canvas became the preferred medium for artists after the fifteenth century, enabling larger and more detailed works. These works demonstrated how optical principles could guide artistic practice."
+    },
+    {
+      "id": "judge1_good_constant_theme",
+      "pattern": "panel",
+      "verdict": "good",
+      "source": "Workflow judge panel, judge 1 (subtle drift lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [],
+      "text": "Memory is unreliable in ways both predictable and hidden. It reconstructs the past rather than recording it faithfully. It fills gaps with plausible details we mistake for facts. It strengthens connections between events that occurred together, blending causes with coincidence. It shapes how we understand ourselves and our place in history."
+    },
+    {
+      "id": "judge1_bad_subtle_drift",
+      "pattern": "panel",
+      "verdict": "bad",
+      "source": "Workflow judge panel, judge 1 (subtle drift lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [
+        "topic_drift",
+        "unanchored_chain"
+      ],
+      "text": "Conservation efforts in the Amazon rainforest focus on protecting endangered species. Jaguars are apex predators that roam vast territories, requiring millions of acres of continuous forest. Continuous forest provides habitat for countless species of birds and insects. Insects play a crucial role in pollinating plants and breaking down dead matter. Dead matter accumulates on the forest floor, creating rich soil that supports new growth."
+    },
+    {
+      "id": "judge1_bad_long_runway",
+      "pattern": "panel",
+      "verdict": "bad",
+      "source": "Workflow judge panel, judge 1 (subtle drift lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [
+        "long_runway"
+      ],
+      "text": "During the eighteenth century, when improvements in microscope design and the standardization of specimen preparation techniques throughout European scientific societies allowed naturalists to observe cellular structures was the moment biology entered a new era. This discovery revolutionized our understanding of living things."
+    },
+    {
+      "id": "readme_linking_good",
+      "pattern": "panel",
+      "verdict": "good",
+      "source": "Workflow judge panel, judge 2 (technical documentation lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [],
+      "text": "The API uses HTTP for all requests. Each request includes an authentication header containing a JWT token. The token encodes the user's identity and permissions. Permissions determine which resources the client can access. Resources include database tables, files, and compute endpoints. Endpoints respond with JSON containing the requested data or an error message. Error messages include a numeric code and a human-readable description."
+    },
+    {
+      "id": "commit_constant_theme_good",
+      "pattern": "panel",
+      "verdict": "good",
+      "source": "Workflow judge panel, judge 2 (technical documentation lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [],
+      "text": "The build system now supports parallel task execution. Task execution reduces wall-clock time on multi-core systems. Task scheduling respects dependency graphs. Task isolation prevents interference between concurrent workers. Tasks communicate through message queues."
+    },
+    {
+      "id": "code_comment_topic_drift",
+      "pattern": "panel",
+      "verdict": "bad",
+      "source": "Workflow judge panel, judge 2 (technical documentation lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [
+        "topic_drift",
+        "unanchored_chain"
+      ],
+      "text": "Parse the configuration file into a dictionary of options. Dictionary lookups happen in constant time using hash tables. Hash tables distribute keys across multiple buckets. Buckets can contain multiple entries if hashing produces collisions. Collisions are resolved through chaining where each bucket maintains a linked list. Linked lists enable fast insertion and deletion. Performance depends on the quality of the hash function."
+    },
+    {
+      "id": "readme_long_runway_bad",
+      "pattern": "panel",
+      "verdict": "bad",
+      "source": "Workflow judge panel, judge 2 (technical documentation lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [
+        "long_runway"
+      ],
+      "text": "Installation, configuration, testing, and deployment of the application across local development machines, staging environments, and production clusters require careful attention. The setup script handles these steps automatically. Build artifacts are cached to speed up subsequent deployments. Caching reduces bandwidth consumption. Cache invalidation happens when source files change."
+    },
+    {
+      "id": "doc_missing_index",
+      "pattern": "panel",
+      "verdict": "bad",
+      "source": "Workflow judge panel, judge 2 (technical documentation lens). Verdict is the judge's, not the source author's.",
+      "tier": "panel",
+      "expected_findings": [
+        "missing_index"
+      ],
+      "text": "When designing database schemas for multi-tenant applications with strict isolation requirements, the developer must consider access patterns and performance constraints. Users query their own data frequently. Data must replicate across availability zones. Zones fail independently to ensure availability. Replication introduces consistency challenges. Challenges require careful trade-off decisions."
+    }
+  ]
+}
