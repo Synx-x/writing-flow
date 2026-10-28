@@ -20,5 +20,8 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+writing_flow = ["defaults.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

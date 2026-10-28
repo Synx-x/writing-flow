@@ -335,7 +335,7 @@ def test_main_end_to_end_via_real_subprocess(tmp_path, monkeypatch):
         input=payload, capture_output=True, text=True, env=env, timeout=10,
     )
     assert result.returncode == 2, result.stderr
-    assert "harness-kit[audit:blocked]" in result.stderr
+    assert "writing-flow[audit:blocked]" in result.stderr
 
     # Second pass, identical text, identical payload: must not re-block --
     # our own marker file (written by the first pass) caps it.

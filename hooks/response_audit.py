@@ -31,7 +31,8 @@ try:
     import clean_reply_handoff
 except Exception:
     clean_reply_handoff = None
-from writing_flow.transcript import user_prose
+from writing_flow.transcript import user_prose, tail_lines
+from writing_flow import prompt_echo
 
 # Plain mode is optional. A missing module leaves the flow gate in charge
 # rather than breaking the audit.
@@ -245,7 +246,7 @@ def _genuine_user_prompts(transcript_path: str):
                 if text_content.startswith("Stop hook feedback:"):
                     continue
                 if ("RESPONSE AUDIT" in text_content or "Plain: " in text_content
-                        or "harness-kit[audit:" in text_content):
+                        or "writing-flow[audit:" in text_content):
                     continue
 
                 prompts.append(text_content)
@@ -894,6 +895,34 @@ def check_chat_form(text: str, kinds_out: list | None = None) -> list[tuple[str,
     return out
 
 
+def check_prompt_echo(text: str, transcript_path: str) -> list[tuple[str, str]]:
+    """Check reply sentences against recent guidance; the opening is exempt."""
+    prompts = []
+    for raw in reversed(tail_lines(transcript_path, 3000)):
+        try:
+            record = json.loads(raw)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        value = user_prose(record)
+        if not value or value.lstrip().startswith(("<task-notification", "<command-", "<local-command-", "<bash-")):
+            continue
+        lowered = value.lstrip().lower()
+        if lowered.startswith(("system reminder", "stop hook feedback:", "writing-flow[", "response audit")):
+            continue
+        prompts.append(value)
+        if len(prompts) == 3:
+            break
+    clauses = prompt_echo.guidance_clauses(list(reversed(prompts)))
+    sentences = list(prompt_echo._sentences(text))
+    findings = []
+    for item in prompt_echo.find_echo(text, clauses):
+        if sentences and item["sentence"] == sentences[0][0]:
+            continue
+        severity = "HARD" if item["sure"] else "SOFT"
+        findings.append((severity, f"Prompt echo: {item['kind']} guidance '{item['clause']}' appears in '{item['sentence']}'. Rewrite as reader-facing content."))
+    return findings
+
+
 def flow_override_hint(session_id: str) -> str:
     """Tell the model where the escape is, so a wrong finding costs one line.
 
@@ -1034,6 +1063,7 @@ def compute_findings(transcript_path: str, text: str | None = None,
     else:
         gate_items = check_response_flow(text, session_id, gate_kinds)
         gate_items += check_chat_form(text, gate_kinds)
+    gate_items += check_prompt_echo(text, transcript_path)
     all_findings.extend(apply_flow_gate(gate_items, gate_kinds, session_id))
 
     # Verbosity budget. A stated limit in the prompt overrides phase and

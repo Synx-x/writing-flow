@@ -1,0 +1,30 @@
+[
+  {
+    "id": "readme",
+    "kind": "file",
+    "path": "README.md",
+    "prompt": "Create README.md for a command-line tool named tidy-csv. It removes duplicate rows from CSV files and normalizes header names to snake_case. Cover install with pip, basic usage, the options --dedupe-key, --keep first|last and --dry-run, and one worked example."
+  },
+  {
+    "id": "explain",
+    "kind": "chat",
+    "prompt": "In chat, without creating any files: explain how HTTP caching works with ETag and Cache-Control headers, for a backend developer who has never configured caching. Cover how a browser revalidates and when to choose max-age over no-cache."
+  },
+  {
+    "id": "email",
+    "kind": "chat",
+    "prompt": "In chat, without creating any files: draft an email to my engineering team. Our weekly sync moves from Monday 09:00 to Thursday 14:00 from 1 December. I want objections by Friday, and the old calendar invite gets cancelled."
+  },
+  {
+    "id": "code",
+    "kind": "file",
+    "path": "retry.py",
+    "prompt": "Create retry.py: a Python module with a retry decorator. It supports exponential backoff with jitter, a maximum number of attempts, and a tuple of exception types to retry on. Include docstrings and comments, and a short usage example in the module docstring."
+  },
+  {
+    "id": "howto",
+    "kind": "file",
+    "path": "docs/rotate-api-key.md",
+    "prompt": "Create docs/rotate-api-key.md: a short how-to for rotating an API key with zero downtime, in a service that reads the key from an environment variable and runs as two replicas behind a load balancer."
+  }
+]

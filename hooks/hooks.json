@@ -2,10 +2,11 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_style.py\""},
-          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_flow.py\""}
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_flow.py\""},
+          {"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_prompt_echo.py\""}
         ]
       }
     ],

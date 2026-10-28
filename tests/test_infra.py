@@ -16,7 +16,8 @@ def test_corrupt_config_gives_defaults(tmp_path, monkeypatch):
     bad = tmp_path / "config.json"
     bad.write_text("{not json")
     monkeypatch.setenv("WRITING_FLOW_CONFIG", str(bad))
-    assert config.hook_config("guard_style") == {}
+    assert config.hook_config("guard_style")["enabled"] is True
+    assert config.hook_config("guard_style")["skip_env"] == "WRITING_FLOW_SKIP_STYLE_CHECK"
     assert config.hook_enabled("guard_style") is True
     assert config.hook_verbosity("guard_style") == "auto"
     assert config.retro_fix_enabled() is True

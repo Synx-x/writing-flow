@@ -187,7 +187,7 @@ def _run_guard_style(path, content):
 def test_legacy_blocking_label_still_blocks():
     result = _run_guard_style("/tmp/probe/x.md", "We decided to keep this pattern.\n")
     assert result.returncode == 2
-    assert "harness-kit[style:blocked]" in result.stderr
+    assert "writing-flow[style:blocked]" in result.stderr
 
 
 def test_new_label_is_advisory_only():

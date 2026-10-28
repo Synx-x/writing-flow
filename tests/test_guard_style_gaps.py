@@ -66,7 +66,7 @@ def test_verbosity_default_shows_actual_violations(tmp_path):
     payload = {"tool_name": "Write", "tool_input": {"file_path": str(tmp_path / "x.py"), "content": content}}
     code, stderr = _run(GUARD_STYLE, payload)
     assert code == 2
-    assert "semicolon in prose" in stderr and "harness-kit[style:blocked]" in stderr
+    assert "semicolon in prose" in stderr and "writing-flow[style:blocked]" in stderr
 
 
 def test_verbosity_terse_rolls_up_but_stays_blocking(tmp_path):
@@ -82,7 +82,7 @@ def test_verbosity_terse_rolls_up_but_stays_blocking(tmp_path):
     code, stderr = _run(GUARD_STYLE, payload,
                         env=home_env(tmp_path / "home", WRITING_FLOW_CONFIG=str(local_dir / "config.json")))
     assert code == 2
-    assert "harness-kit[style:blocked]" not in stderr
+    assert "writing-flow[style:blocked]" not in stderr
     assert "structural" in stderr
     assert "Set verbosity=full for the actual violations." in stderr
 
@@ -113,11 +113,13 @@ def test_ste_off_skips_structural_block(tmp_path):
 
 
 def test_ste_warn_downgrades_to_notice_not_block(tmp_path):
-    content = f"# The tool {NOM} the data; it {PHRASAL} the customer.\nx = 1\n"
+    content = "# The service starts the job; then it waits for the result.\nx = 1\n"
     payload = {"tool_name": "Write", "tool_input": {"file_path": str(tmp_path / "x.py"), "content": content}}
-    code, stderr = _run(GUARD_STYLE, payload, env={"HARNESS_KIT_STE": "warn"})
+    code, stderr = _run(GUARD_STYLE, payload,
+                        env={"WRITING_FLOW_STE": "warn", "HARNESS_KIT_STE": "warn"})
     assert code == 0
-    assert "harness-kit[style:notice]" in stderr
+    assert "writing-flow[style:blocked]" in stderr
+    assert "semicolon in prose" in stderr
 
 
 def test_self_ref_exemption_still_narrow():

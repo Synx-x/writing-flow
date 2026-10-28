@@ -1,6 +1,6 @@
 """One block format for every blocking guard.
 
-    harness-kit[style:blocked]: agents/meta-pr-publisher.md, 2 to fix
+    writing-flow[style:blocked]: agents/meta-pr-publisher.md, 2 to fix
       1 chatbot phrase "certainly!"
         fix: cut it
       2 line 37: chat wording "lets"
@@ -25,7 +25,7 @@ WIDTH = 72
 # The guard file behind each component, for readers that count blocks per guard.
 GUARDS = {"style": "guard_style.py", "shell-write": "bash_write_router.py",
           "paths": "guard_protected_paths.py", "audit": "response_audit.py"}
-HEAD = re.compile(r"^harness-kit\[(?P<component>[a-z-]+):(?P<stage>[a-z-]+)\]: (?P<text>.*)$")
+HEAD = re.compile(r"^writing-flow\[(?P<component>[a-z-]+):(?P<stage>[a-z-]+)\]: (?P<text>.*)$")
 ITEM = re.compile(r"^  (?P<n>\d+) (?P<text>.+)$")
 FIX = re.compile(r"^    fix: (?P<fix>.+)$")
 
@@ -71,7 +71,7 @@ def render(component: str, subject: str, items: list[tuple[str, str]], advice: l
            notes: list[str] | None = None, stage: str = "blocked") -> str:
     """The block: a headline, numbered findings each with its fix, then advice and notes."""
     count = len(items)
-    head = f"harness-kit[{component}:{stage}]: {subject}"
+    head = f"writing-flow[{component}:{stage}]: {subject}"
     if count:
         head += f", {count} to fix"
     lines = [head]

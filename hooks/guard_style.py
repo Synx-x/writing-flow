@@ -147,7 +147,7 @@ def retitle(lines: list[str], stage: str, why: str) -> list[str]:
     """The same block with its headline marked as a notice, not a block."""
     if not lines:
         return lines
-    head = re.sub(r"^harness-kit\[style:blocked\]: ", f"harness-kit[style:{stage}]: ", lines[0])
+    head = re.sub(r"^harness-kit\[style:blocked\]: ", f"writing-flow[style:{stage}]: ", lines[0])
     # Nothing is blocked, so "3 to fix" would overstate it.
     head = re.sub(r", (\d+) to fix$", r", \1 findings", head)
     return [f"{head} ({why})"] + lines[1:]

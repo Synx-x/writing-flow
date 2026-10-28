@@ -1,0 +1,51 @@
+{
+  "hooks": {
+    "guard_prompt_echo": {
+      "enabled": true,
+      "exempt_paths": []
+    },
+    "guard_style": {
+      "skip_env": "WRITING_FLOW_SKIP_STYLE_CHECK",
+      "skip_reason": "Set WRITING_FLOW_SKIP_STYLE_CHECK=1 when CAVEMAN_MODE clashes with Tier-1 word enforcement; caveman needs short synonyms but guard blocks them",
+      "enabled": true,
+      "reason": "caveman mode retired; replaced by technical-english output style, which is compatible with prose guards"
+    },
+    "guard_flow": {
+      "enabled": true,
+      "mode": "strict",
+      "allow_override": true,
+      "exempt_marker": "flow-exempt",
+      "reason": "2026-09-24 session 36cece22: long_runway blocked two legitimate rewrites of gaming-mode.md (14-word then 13-word 'runway' claims). Traced through flow_rules.analyze_sentence/_is_verb by hand: the real verb ('kills') sits right after an inline-code function word (`on`, `only`) that the heuristic reads as a preposition/adverb noun-signal, so it is skipped; the scan then runs to the end of the sentence and misreads the sentence-final plural noun before the period ('stacks.') as the verb, because 'next word is empty' wrongly qualifies as a third-person -s verb match. A pronoun-subject rewrite of the exact same fact ('It kills ...') passed clean on the third try, proving the content was already fine and the parser was wrong both times, not the prose. flow_report.py over the last 7 days shows 179 long_runway findings against only 1 accepted override and 56 'capped' (unsatisfiable) outcomes, consistent with a rule that misfires far more than the override log alone suggests. Disabling only this kind; strict mode keeps vague_heading and the other 8 flow kinds, one of which (vague_heading) caught a real issue in this same session.",
+      "kinds": [
+        "topic_drift",
+        "unanchored_chain",
+        "new_in_topic",
+        "missing_index",
+        "preview_term_dropped",
+        "vague_heading",
+        "index_count_mismatch",
+        "doc_intro_too_long"
+      ]
+    },
+    "response_audit": {
+      "conversational_multiplier": 2,
+      "conversational_floor": 25,
+      "soft_ratio": 1.2,
+      "hard_ratio": 1.8,
+      "enabled": true,
+      "flow_mode": "strict",
+      "allow_override": true,
+      "reason": "2026-10-24 session b4570dd1: all 6 long_runway findings in this session were parser failures, not prose defects. Each flagged sentence put the real verb at word 1-3 (needs/resend/rules/matches/hits/are), yet the scan ran to the sentence-final noun and reported 11-21 words before the verb. COMMON_VERBS lacks resend/rule/hits, and adding them cleared only 2 of 6, so the remaining 4 are the same skipped-verb defect guard_flow.py documents (it reads an inline-code function word as a noun signal, then a sentence-final plural as the verb). guard_flow already carries kinds minus long_runway for exactly this reason. Extending the same decision to the chat surface keeps one policy for one broken rule while strict mode keeps the other 8 flow kinds.",
+      "flow_kinds": [
+        "topic_drift",
+        "unanchored_chain",
+        "new_in_topic",
+        "missing_index",
+        "preview_term_dropped",
+        "vague_heading",
+        "index_count_mismatch",
+        "doc_intro_too_long"
+      ]
+    }
+  }
+}

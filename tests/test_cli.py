@@ -16,6 +16,6 @@ def test_check_skips_every_output_style(capsys):
     styles = sorted(Path("output-styles").glob("*.md"))
     assert styles
     assert cli.main(["check", "output-styles"]) == 0
-    lines = capsys.readouterr().out.splitlines()
+    lines = [line for line in capsys.readouterr().out.splitlines() if not line.endswith("findings: 0 blocking, 0 advisory")]
     assert len(lines) == len(styles)
     assert all(": skipped (guard_style self-reference exemption)" in line for line in lines)

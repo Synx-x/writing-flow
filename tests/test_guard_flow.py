@@ -130,7 +130,8 @@ def test_good_prose_is_silent(tmp_path):
 
 
 def test_warn_mode_emits_additional_context(tmp_path):
-    res = run_hook(write_payload(str(tmp_path / "doc.md"), by_id("linking_bad_no_anchor")["text"]), tmp_path)
+    res = run_hook(write_payload(str(tmp_path / "doc.md"), by_id("linking_bad_no_anchor")["text"]), tmp_path,
+                   {"WRITING_FLOW_FLOW": "warn"})
     assert res.returncode == 0
     out = json.loads(res.stdout)
     ctx = out["hookSpecificOutput"]["additionalContext"]
@@ -220,6 +221,11 @@ def test_skip_env_is_honoured(tmp_path):
 
 
 def test_edit_payload_uses_new_string(tmp_path):
+    config_path = tmp_path / ".claude" / "writing-flow" / "config.json"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(json.dumps({"hooks": {"guard_flow": {
+        "mode": "warn", "kinds": list(flow_rules.ALL_KINDS),
+    }}}))
     payload = {
         "tool_name": "Edit",
         "tool_input": {

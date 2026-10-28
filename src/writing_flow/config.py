@@ -2,6 +2,7 @@
 import json
 import os
 from datetime import datetime, timezone
+from pathlib import Path
 
 from . import paths
 
@@ -21,10 +22,20 @@ def config() -> dict:
         return {}
 
 
+def defaults() -> dict:
+    """Load the package's shipped config defaults."""
+    try:
+        return json.loads((Path(__file__).parent / "defaults.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
 def hook_config(hook_name: str) -> dict:
-    hooks = config().get("hooks", {})
-    value = hooks.get(hook_name, {}) if isinstance(hooks, dict) else {}
-    return value if isinstance(value, dict) else {}
+    shipped = defaults().get("hooks", {})
+    user = config().get("hooks", {})
+    base = shipped.get(hook_name, {}) if isinstance(shipped, dict) else {}
+    value = user.get(hook_name, {}) if isinstance(user, dict) else {}
+    return {**(base if isinstance(base, dict) else {}), **(value if isinstance(value, dict) else {})}
 
 
 def hook_enabled(hook_name: str) -> bool:
