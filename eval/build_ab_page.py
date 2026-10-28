@@ -149,7 +149,8 @@ def _page_html(data: dict[str, Any], summaries: dict[str, Any], style: str,
     version_js = template[template.index("/* ---------- versioning: pill,", content_start):version_end]
 
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-    payload = payload.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    payload = (payload.replace("<", "\\u003c").replace(">", "\\u003e")
+               .replace("&", "\\u0026").replace("/", "\\u002f"))
     raw_mean = summaries["raw"]["mean_sentence_length"]
     plugin_mean = summaries["plugin"]["mean_sentence_length"]
     raw_findings = summaries["raw"]["check_findings"]
@@ -173,7 +174,11 @@ a{color:inherit}code,.mono{font-family:var(--mono)}:focus-visible{outline:2px so
 .lede{max-width:68ch;padding-top:22px;color:var(--ink-2);font-size:15px}.note{margin-top:14px;color:var(--ink-3);font-size:12px}
 .task{max-width:1200px;margin:0 auto;padding:42px 0 48px;border-bottom:1px solid var(--line)}.taskhead{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:14px}.tasknum{color:var(--accent);font:12px var(--mono)}.task h2{font:350 clamp(24px,4vw,42px)/1.05 var(--display);letter-spacing:-.03em}.runs{display:flex;gap:5px}.runs button{padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);font:11px var(--mono)}.runs button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
 .prompt{margin:17px 0 22px;padding:12px 15px;border-left:2px solid var(--accent);background:var(--raised);color:var(--ink-2);white-space:pre-wrap;overflow-wrap:anywhere}
-.outputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.out{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--raised)}.outhead{display:flex;justify-content:space-between;gap:10px;padding:10px 13px;border-bottom:1px solid var(--line);font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em}.arm-plugin{color:var(--accent)}.output{max-height:560px;min-height:90px;margin:0;padding:15px;overflow:auto;white-space:pre;overflow-wrap:normal;color:var(--ink);font:13px/1.65 var(--sans);tab-size:2}.output code{white-space:pre}
+.outputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.out{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--raised)}.outhead{display:flex;justify-content:space-between;gap:10px;padding:10px 13px;border-bottom:1px solid var(--line);font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em}.arm-plugin{color:var(--accent)}.output{max-height:560px;min-height:90px;margin:0;padding:15px;overflow:auto;white-space:normal;overflow-wrap:anywhere;color:var(--ink);font:13px/1.65 var(--sans);tab-size:2}.output.source{white-space:pre;overflow-wrap:normal;font-family:var(--mono)}.task[data-view=rendered] .output.source,.task[data-view=source] .rendered-output{display:none}
+.rendered-output h1,.rendered-output h2,.rendered-output h3,.rendered-output h4,.rendered-output h5,.rendered-output h6{margin:1.1em 0 .45em;color:var(--ink);font-family:var(--display);line-height:1.15;letter-spacing:-.02em}.rendered-output h1{font-size:1.7em}.rendered-output h2{font-size:1.45em}.rendered-output h3{font-size:1.2em}.rendered-output h4,.rendered-output h5,.rendered-output h6{font-size:1.05em}.rendered-output p{margin:.65em 0}.rendered-output ul,.rendered-output ol{margin:.6em 0;padding-left:1.6em}.rendered-output li+li{margin-top:.25em}.rendered-output table{display:block;width:max-content;max-width:100%;overflow:auto;border-collapse:collapse;margin:.8em 0;font-size:.92em}.rendered-output th,.rendered-output td{padding:6px 9px;border:1px solid var(--line);text-align:left;vertical-align:top}.rendered-output th{background:var(--sunk);font-weight:600}.rendered-output :not(pre)>code{padding:.1em .35em;border-radius:4px;background:var(--sunk);font-family:var(--mono);font-size:.9em;overflow-wrap:anywhere}.rendered-output pre{max-width:100%;margin:.8em 0;padding:12px;overflow:auto;border-radius:7px;background:var(--code);color:var(--code-ink);font:12px/1.6 var(--mono);tab-size:2}.rendered-output pre code{white-space:pre;font:inherit}.rendered-output blockquote{margin:.8em 0;padding:.15em 0 .15em 1em;border-left:2px solid var(--accent);color:var(--ink-2)}.rendered-output a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px;overflow-wrap:anywhere}.rendered-output :first-child{margin-top:0}.rendered-output :last-child{margin-bottom:0}
+.output[data-rendered=true]{white-space:normal}.rendered-output table,.rendered-output pre{overscroll-behavior:contain}
+:root[data-markdown-fallback=true] .rendered-output{display:none!important}:root[data-markdown-fallback=true] .output.source{display:block!important}
+.markdown-note{position:fixed;z-index:6;top:64px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--raised);color:var(--ink-2);font:11px var(--mono);text-align:center}.markdown-note[hidden]{display:none}
 .changes{display:none;margin:0;padding:16px;max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--raised);white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 var(--mono)}.task[data-view=changes] .outputs{display:none}.task[data-view=changes] .changes{display:block}.changes del{background:var(--bad-bg);color:var(--bad);text-decoration:line-through}.changes ins{background:var(--good-bg);color:var(--good);text-decoration:none}
 .metrics{width:100%;margin-top:20px;border-collapse:collapse;font:12px var(--mono)}.metrics th,.metrics td{padding:8px 10px;border-bottom:1px solid var(--hair);text-align:right;font-weight:400}.metrics th:first-child,.metrics td:first-child{text-align:left;color:var(--ink-2)}.metrics thead th{color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
 .hooks{margin-top:22px}.hooks h3{margin-bottom:8px;color:var(--ink-3);font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase}.hooks ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0}.hooks li{max-width:100%;padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);font:11px var(--mono);overflow-wrap:anywhere}.hooks .blocked{border-color:var(--bad);color:var(--bad)}.hooks .empty{color:var(--ink-3)}
@@ -206,7 +211,8 @@ a{color:inherit}code,.mono{font-family:var(--mono)}:focus-visible{outline:2px so
     )
     frame = (
         "<div class=\"frame\"><div class=\"brand\">WRITING FLOW <span>RAW VS PLUGIN</span></div>"
-        "<div class=\"seg\" role=\"group\" aria-label=\"Comparison mode\"><button id=\"mode-side\" type=\"button\" aria-pressed=\"true\">Side by side</button>"
+        "<div class=\"seg\" role=\"group\" aria-label=\"Comparison mode\"><button id=\"mode-rendered\" type=\"button\" aria-pressed=\"true\">Rendered</button>"
+        "<button id=\"mode-source\" type=\"button\" aria-pressed=\"false\">Source</button>"
         "<button id=\"mode-changes\" type=\"button\" aria-pressed=\"false\">Changes</button></div><div class=\"edge\">5 TASKS · 2 RUNS</div></div>"
     )
     stamp_match = re.search(r'<script type="application/json" id="artifact-version">.*?</script>', version_markup, re.S)
@@ -248,10 +254,13 @@ a{color:inherit}code,.mono{font-family:var(--mono)}:focus-visible{outline:2px so
         + css
         + "\n</style>\n"
         + frame
+        + '<p id="markdown-note" class="markdown-note" hidden>Markdown libraries failed to load; showing source.</p>\n'
         + sections
         + version_html
+        + '<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>\n'
+        + '<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>\n'
         + "<script>\n"
-        + "const PAGE={key:'writing-flow-ab',changes:[{v:'next',items:['First published: raw vs writing-flow output for five tasks, two runs each']}]};\n"
+        + "const PAGE={key:'writing-flow-ab',changes:[{v:'next',items:['Outputs now render as Markdown by default. Source shows the raw text.'],show:['.outputs']},{v:1,items:['First published: raw vs writing-flow output for five tasks, two runs each']}]};\n"
         + "const DATA=" + payload + ";\n"
         + r"""
 const escText = value => String(value ?? '');
@@ -262,6 +271,9 @@ const metricNames = [
 ];
 const taskState = new Map(DATA.tasks.map(task => [task.id, 1]));
 const tasksRoot = document.getElementById('tasks');
+const markdownReady = typeof window.marked?.parse === 'function' && typeof window.DOMPurify?.sanitize === 'function';
+document.getElementById('markdown-note').hidden = markdownReady;
+document.documentElement.dataset.markdownFallback = String(!markdownReady);
 function node(tag, cls, value){const el=document.createElement(tag);if(cls)el.className=cls;if(value!==undefined)el.textContent=escText(value);return el;}
 function hookItems(meta){const ul=node('ul');const events=meta?.hook_events||{};let count=0;
   Object.entries(events).forEach(([name, decisions])=>Object.entries(decisions||{}).forEach(([decision,n])=>{
@@ -271,14 +283,18 @@ function hookItems(meta){const ul=node('ul');const events=meta?.hook_events||{};
 }
 function renderTask(task){
   const run=taskState.get(task.id)||1;const pair=task.runs.find(item=>item.run===run);
-  const article=node('section','task');article.id=`task-${task.id}`;article.dataset.view='side';
+  const article=node('section','task');article.id=`task-${task.id}`;article.dataset.view='rendered';
   const head=node('div','taskhead');head.append(node('span','tasknum',task.id.toUpperCase()),node('h2','',task.id==='howto'?'Rotate an API key':task.id==='readme'?'tidy-csv README':task.id==='explain'?'HTTP caching':task.id==='email'?'Team sync email':'Retry decorator'));
   const switcher=node('div','runs');[1,2].forEach(n=>{const b=node('button','',`Run ${n}`);b.type='button';b.dataset.action='run';b.dataset.task=task.id;b.dataset.run=String(n);b.setAttribute('aria-pressed',String(n===run));switcher.append(b);});head.append(switcher);article.append(head);
   article.append(node('div','prompt',task.prompt));
   const outputs=node('div','outputs');
   for(const [arm,label,cls] of [['raw','Raw',''],['plugin','Writing-flow','arm-plugin']]){
     const card=node('div','out');const cardHead=node('div','outhead');cardHead.append(node('span',cls,label),node('span','',`Run ${run}`));
-    const output=node('pre','output',pair.outputs[arm].text);card.append(cardHead,output);outputs.append(card);
+    const source=node('pre','output source',pair.outputs[arm].text);
+    const rendered=node('div','output rendered-output');
+    const text=task.id==='code'?`\`\`\`python\n${pair.outputs[arm].text}\n\`\`\``:pair.outputs[arm].text;
+    if(markdownReady)rendered.innerHTML=DOMPurify.sanitize(marked.parse(text));
+    card.append(cardHead,rendered,source);outputs.append(card);
   }
   article.append(outputs);
   const changes=node('pre','changes');changes.setAttribute('aria-label','Unified word-level diff');
@@ -289,9 +305,9 @@ function renderTask(task){
   return article;
 }
 function render(){tasksRoot.replaceChildren(...DATA.tasks.map(renderTask));}
-function setMode(mode){document.querySelectorAll('.task').forEach(task=>task.dataset.view=mode);document.getElementById('mode-side').setAttribute('aria-pressed',String(mode==='side'));document.getElementById('mode-changes').setAttribute('aria-pressed',String(mode==='changes'));}
-document.addEventListener('click',event=>{const target=event.target.closest('[data-action],#mode-side,#mode-changes');if(!target)return;
-  if(target.id==='mode-side')setMode('side');else if(target.id==='mode-changes')setMode('changes');else if(target.dataset.action==='run'){taskState.set(target.dataset.task,Number(target.dataset.run));const mode=document.querySelector('.task')?.dataset.view||'side';render();setMode(mode);}
+function setMode(mode){document.querySelectorAll('.task').forEach(task=>task.dataset.view=mode);for(const name of ['rendered','source','changes'])document.getElementById(`mode-${name}`).setAttribute('aria-pressed',String(mode===name));}
+document.addEventListener('click',event=>{const target=event.target.closest('[data-action],#mode-rendered,#mode-source,#mode-changes');if(!target)return;
+  if(target.id==='mode-rendered')setMode('rendered');else if(target.id==='mode-source')setMode('source');else if(target.id==='mode-changes')setMode('changes');else if(target.dataset.action==='run'){taskState.set(target.dataset.task,Number(target.dataset.run));const mode=document.querySelector('.task')?.dataset.view||'rendered';render();setMode(mode);}
 });
 render();
 """
